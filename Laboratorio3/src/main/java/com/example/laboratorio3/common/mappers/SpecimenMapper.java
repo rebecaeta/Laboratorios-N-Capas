@@ -2,8 +2,9 @@ package com.example.laboratorio3.common.mappers;
 
 import com.example.laboratorio3.domain.dto.request.CreateSpecimenRequest;
 import com.example.laboratorio3.domain.dto.request.UpdateSpecimenRequest;
-import com.example.laboratorio3.domain.dto.response.SpecimenResponse;
+import com.example.laboratorio3.domain.dto.response.specimen.SpecimenResponse;
 import com.example.laboratorio3.domain.entities.Specimen;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -42,4 +43,7 @@ public class SpecimenMapper {
 
     // TODO: El estudiante deberá agregar aquí el método para mapear un Page<Specimen> a Page<SpecimenResponse>
     // pista: utilizando .map(this::toDto)
+    public Page<SpecimenResponse> toDtoList(Page<Specimen> specimens) {
+        return specimens.map(this::toDto);
+    }
 }

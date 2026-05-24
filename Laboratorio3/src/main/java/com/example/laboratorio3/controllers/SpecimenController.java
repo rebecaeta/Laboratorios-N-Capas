@@ -31,6 +31,17 @@ public class SpecimenController {
                 HttpStatus.OK, specimenService.getSpecimenById(id));
     }
 
+    @GetMapping("/getAll")
+    public ResponseEntity<GeneralResponse> getAllSpecimens(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "name") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortOrder
+    ) {
+        return buildResponse("Specimens found", HttpStatus.OK,
+                specimenService.getAllSpecimens(page, size, sortBy, sortOrder));
+    }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<GeneralResponse> updateSpecimen(@PathVariable UUID id, @RequestBody UpdateSpecimenRequest request) {
         return buildResponse("Specimen updated successfully",
