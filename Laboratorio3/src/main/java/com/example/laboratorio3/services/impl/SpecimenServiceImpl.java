@@ -5,6 +5,7 @@ import com.example.laboratorio3.domain.dto.request.CreateSpecimenRequest;
 import com.example.laboratorio3.domain.dto.request.UpdateSpecimenRequest;
 import com.example.laboratorio3.domain.dto.response.SpecimenResponse;
 import com.example.laboratorio3.domain.entities.Specimen;
+import com.example.laboratorio3.exception.ResourceNotFoundException;
 import com.example.laboratorio3.repositories.SpecimenRepository;
 import com.example.laboratorio3.services.SpecimenService;
 import jakarta.transaction.Transactional;
@@ -33,7 +34,7 @@ public class SpecimenServiceImpl implements SpecimenService {
     public List<SpecimenResponse> getAllSpecimens() {
         List<Specimen> specimens = specimenRepository.findAll();
         if (specimens.isEmpty())
-            throw new RuntimeException("No specimens are registered in Hyrule");
+            throw new ResourceNotFoundException("No specimens are registered in Hyrule");
 
         return specimens.stream()
                 .map(specimenMapper::toDto)
@@ -43,7 +44,7 @@ public class SpecimenServiceImpl implements SpecimenService {
     @Override
     public SpecimenResponse getSpecimenById(UUID id) {
         return specimenMapper.toDto(specimenRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Specimen not found in Hyrule Records"))
+                .orElseThrow(() -> new ResourceNotFoundException("Specimen not found in Hyrule Records"))
         );
     }
 
